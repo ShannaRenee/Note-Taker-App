@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const db = require('./db/db.json');
 const fs = require('fs');
+const uuid = require('./helpers/uuid');
 
 const app = express();
 
@@ -16,14 +17,23 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/notes.html'))
 });
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'))
 });
 
 app.get('/api/notes', (req, res) => {
-    fs.readFile('./db/db.json', 'utf8', (err, data) => {
-        res.json(data);
-    })
+    console.log('get request recieved')
+    fs.readFile('./db/db.json', 'utf-8', (err, data) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.json(data);
+        }})
+});
+
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'))
 });
 
 app.post('/api/notes', (req, res) => {
@@ -36,7 +46,8 @@ app.post('/api/notes', (req, res) => {
         // Creating the note object to hold the information
         const note = {
             title,
-            text
+            text,
+            id: uuid()
         }
         // Reading the info contained in the file
         fs.readFile('./db/db.json', 'utf-8', (err, data) => {
