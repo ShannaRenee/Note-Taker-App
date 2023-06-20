@@ -6,7 +6,7 @@ const uuid = require('./helpers/uuid');
 
 const app = express();
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(express.static('public'));
 app.use(express.json());
@@ -27,7 +27,8 @@ app.get('/api/notes', (req, res) => {
         if (err) {
             console.log(err)
         } else {
-            res.json(data);
+            const parsedData = JSON.parse(data)
+            res.json(parsedData);
         }})
 });
 
