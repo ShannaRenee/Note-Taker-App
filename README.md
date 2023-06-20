@@ -1,5 +1,6 @@
 # Note Taker App
 
+![note taker](https://github.com/ShannaRenee/Note-Taker-App/assets/126972906/90bab453-42f7-4a08-a6ed-c00972396730)
 
 
 ## Description
